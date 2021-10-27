@@ -34,7 +34,7 @@ main button {
 }
 
 header {
-    height: 10%;
+    height: 5rem;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;   

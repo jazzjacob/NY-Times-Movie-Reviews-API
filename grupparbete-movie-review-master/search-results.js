@@ -8,12 +8,16 @@ const APIKey = 'ABGhAz7mHz2uYymBiuGQUhBYc4taw5KF';
 const main = document.querySelector('main');
 const searchResults = document.querySelector('.search-results');
 const h1 = document.querySelector('h1');
+const searchField = document.querySelector('#search-field');
 
 
 window.addEventListener('DOMContentLoaded', () => {
   let searchTerm = sessionStorage.getItem('searchTerm');
-  let searchTermInH1 = document.createElement('em');
-  searchTermInH1.innerHTML = searchTerm;
+  searchField.value = searchTerm;
+  searchTerm = searchTerm.toUpperCase();
+  let searchTermInH1 = document.createElement('span');
+  
+  searchTermInH1.innerHTML = `SHOWING RESULTS FOR: "${searchTerm}"`;
   h1.innerHTML = '';
   h1.appendChild(searchTermInH1);
   
@@ -46,7 +50,7 @@ const search = async (input, offset, pageNumber) => {
     resultsArray.forEach(element => {
       let result = document.createElement('li');
       let movieTitle = document.createElement('h2');
-      let openingYear = document.createElement('p');
+      let openingYear = document.createElement('span');
       let movieDescription = document.createElement('p');
       
       let linkToReview = document.createElement('a');
@@ -58,8 +62,9 @@ const search = async (input, offset, pageNumber) => {
       
       if (element.opening_date) {
         openingYear.innerHTML = element.opening_date.substring(0, 4); 
+        openingYear.classList.add('year');
       } else {
-        openingYear.innerHTML = 'Future release';
+        openingYear.innerHTML = '';
       }
       movieDescription.innerHTML = element.summary_short;
       
@@ -85,6 +90,7 @@ const search = async (input, offset, pageNumber) => {
     
     if (offset > 0) {
       const prevButton = document.createElement('button');
+      prevButton.classList.add('nav-button');
       prevButton.innerText = '<- Prev';
       searchResults.append(prevButton);
       prevButton.addEventListener('click', () => {
@@ -93,6 +99,7 @@ const search = async (input, offset, pageNumber) => {
     }
     if (data.has_more) {
       const nextButton = document.createElement('button');
+      nextButton.classList.add('nav-button');
       nextButton.innerText = 'Next ->';
       searchResults.append(nextButton);
       nextButton.addEventListener('click', () => {
